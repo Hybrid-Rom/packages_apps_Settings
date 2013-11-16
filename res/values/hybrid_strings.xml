@@ -373,4 +373,7 @@
     <string name="toggle2g3g">2G/3G</string>
     <string name="toggleWimax">WiMAX</string>
     <string name="toggleNfc">NFC</string>
+
+    <!-- Font size control -->
+    <string name="font_size_sample">Sample</string>
 </resources>
