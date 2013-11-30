@@ -73,7 +73,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
-    private WarnedListPreference mFontSizePref;
+    private FontDialogPreference mFontSizePref;
 
     private final Configuration mCurConfig = new Configuration();
 
