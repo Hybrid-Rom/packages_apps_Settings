@@ -397,4 +397,7 @@
 
     <!-- Font size control -->
     <string name="font_size_sample">Sample</string>
+
+    <!-- Themes Settings -->
+    <string name="themes_settings_title">Themes</string>
 </resources>
