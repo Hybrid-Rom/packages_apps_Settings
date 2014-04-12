@@ -27,4 +27,7 @@
     <string name="mod_version">Hybrid version</string>
     <string name="mod_version_default">Unknown</string>
 
+    <!-- Themes Settings -->
+    <!-- Settings main menu entry -->
+    <string name="themes_settings_title">Themes</string>
 </resources>
