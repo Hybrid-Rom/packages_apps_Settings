@@ -203,12 +203,17 @@ public class SecuritySettings extends SettingsPreferenceFragment
         addPreferencesFromResource(R.xml.security_settings);
         root = getPreferenceScreen();
 
+        // Add options for device encryption
+        mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
+
+        if (mIsPrimary) {
+            // App security settings
+            addPreferencesFromResource(R.xml.security_settings_app_slim);
+        }
+
         // Add options for lock/unlock screen
         final int resid = getResIdForLockUnlockScreen(getActivity(), mLockPatternUtils);
         addPreferencesFromResource(resid);
-
-        // Add options for device encryption
-        mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
 
         if (!mIsPrimary) {
             // Rename owner info settings
@@ -386,14 +391,6 @@ public class SecuritySettings extends SettingsPreferenceFragment
         if (um.hasUserRestriction(UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES)
                 || um.hasUserRestriction(UserManager.DISALLOW_INSTALL_APPS)) {
             mToggleAppInstallation.setEnabled(false);
-        }
-
-        // AppOps summary, only visible when strict mode is enabled.
-        if (!AppOpsManager.isStrictEnable()) {
-            Preference appOpsSummary = findPreference(KEY_APP_OPS_SUMMARY);
-            if (deviceAdminCategory != null) {
-                deviceAdminCategory.removePreference(appOpsSummary);
-            }
         }
 
         // Advanced Security features
