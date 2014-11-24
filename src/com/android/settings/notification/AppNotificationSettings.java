@@ -16,6 +16,7 @@
 
 package com.android.settings.notification;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
