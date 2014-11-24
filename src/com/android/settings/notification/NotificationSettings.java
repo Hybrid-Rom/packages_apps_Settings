@@ -162,7 +162,6 @@ public class NotificationSettings extends SettingsPreferenceFragment implements 
         mNotificationAccess = findPreference(KEY_NOTIFICATION_ACCESS);
         refreshNotificationListeners();
 
-<<<<<<< HEAD
         // Listen for updates from AudioManager
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
