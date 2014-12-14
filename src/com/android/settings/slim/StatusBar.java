@@ -17,11 +17,11 @@
 package com.android.settings.slim;
 
 import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -55,10 +55,21 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        // Start observing for changes on auto brightness
-        StatusBarBrightnessChangedObserver statusBarBrightnessChangedObserver =
-                new StatusBarBrightnessChangedObserver(new Handler());
-        statusBarBrightnessChangedObserver.startObserving();
+        PackageManager pm = getPackageManager();
+        Resources systemUiResources;
+        try {
+            systemUiResources = pm.getResourcesForApplication("com.android.systemui");
+        } catch (Exception e) {
+            Log.e(TAG, "can't access systemui resources",e);
+            return;
+        }
+
+        mTicker = (SwitchPreference) prefSet.findPreference(KEY_STATUS_BAR_TICKER);
+        final boolean tickerEnabled = systemUiResources.getBoolean(systemUiResources.getIdentifier(
+                    "com.android.systemui:bool/enable_ticker", null, null));
+        mTicker.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_TICKER_ENABLED, tickerEnabled ? 1 : 0) == 1);
+        mTicker.setOnPreferenceChangeListener(this);
 
 
         mStatusBarBrightnessControl =
@@ -87,44 +98,19 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     @Override
     public void onResume() {
         super.onResume();
-        updateStatusBarBrightnessControl();
+        updateClockStyleDescription();
     }
 
-    private void updateStatusBarBrightnessControl() {
-        try {
-            if (mStatusBarBrightnessControl != null) {
-                int mode = Settings.System.getIntForUser(getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS_MODE,
-                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-
-                if (mode == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
-                    mStatusBarBrightnessControl.setEnabled(false);
-                    mStatusBarBrightnessControl.setSummary(R.string.status_bar_toggle_info);
-                } else {
-                    mStatusBarBrightnessControl.setEnabled(true);
-                    mStatusBarBrightnessControl.setSummary(
-                        R.string.status_bar_toggle_brightness_summary);
-                }
-            }
-        } catch (SettingNotFoundException e) {
+    private void updateClockStyleDescription() {
+        if (mClockStyle == null) {
+            return;
         }
-    }
-
-    private class StatusBarBrightnessChangedObserver extends ContentObserver {
-        public StatusBarBrightnessChangedObserver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            updateStatusBarBrightnessControl();
-        }
-
-        public void startObserving() {
-            getContentResolver().registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS_MODE),
-                    false, this);
-        }
+        if (Settings.System.getInt(getContentResolver(),
+               Settings.System.STATUS_BAR_CLOCK, 1) == 1) {
+            mClockStyle.setSummary(getString(R.string.enabled));
+        } else {
+            mClockStyle.setSummary(getString(R.string.disabled));
+         }
     }
 
 }
