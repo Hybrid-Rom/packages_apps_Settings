@@ -277,13 +277,16 @@ final class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> {
         if (!ensurePaired()) {
             return;
         }
-        if (profile.connect(mDevice)) {
+        if (profile != null && profile.connect(mDevice)) {
             if (Utils.D) {
                 Log.d(TAG, "Command sent successfully:CONNECT " + describe(profile));
             }
             return;
         }
-        Log.i(TAG, "Failed to connect " + profile.toString() + " to " + mName);
+        if (profile != null)
+            Log.i(TAG, "Failed to connect " + profile.toString() + " to " + mName);
+        else
+            Log.i(TAG, "Failed to connect. No profile specified");
     }
 
     private boolean ensurePaired() {
@@ -343,8 +346,7 @@ final class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> {
     }
 
     int getProfileConnectionState(LocalBluetoothProfile profile) {
-        if (mProfileConnectionState == null ||
-                mProfileConnectionState.get(profile) == null) {
+        if (mProfileConnectionState.get(profile) == null) {
             // If cache is empty make the binder call to get the state
             int state = profile.getConnectionStatus(mDevice);
             mProfileConnectionState.put(profile, state);
@@ -544,7 +546,29 @@ final class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> {
      * Refreshes the UI when framework alerts us of a UUID change.
      */
     void onUuidChanged() {
+        Log.d(TAG, " onUuidChanged, mProfile Size " + mProfiles.size());
+        List<LocalBluetoothProfile> mPrevProfiles =
+                new ArrayList<LocalBluetoothProfile>();
+        mPrevProfiles.clear();
+        mPrevProfiles.addAll(mProfiles);
         updateProfiles();
+        /*
+         * Check if new profiles are added
+         */
+        if ((mPrevProfiles.containsAll(mProfiles)) && (!mPrevProfiles.isEmpty())) {
+            Log.d(TAG,"UUID not udpated, returning");
+            mProfiles.clear();
+            mProfiles.addAll(mPrevProfiles);
+            return;
+        }
+        for (int i = 0; i<mProfiles.size(); ++i) {
+            if (!mPrevProfiles.contains(mProfiles.get(i))) {
+                mPrevProfiles.add(mProfiles.get(i));
+            }
+        }
+        mProfiles.clear();
+        mProfiles.addAll(mPrevProfiles);
+
         ParcelUuid[] uuids = mDevice.getUuids();
         long timeout = MAX_UUID_DELAY_FOR_AUTO_CONNECT;
         if (DEBUG){
@@ -572,6 +596,7 @@ final class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> {
     void onBondingStateChanged(int bondState) {
         if (bondState == BluetoothDevice.BOND_NONE) {
             mProfiles.clear();
+            mDevice.setAlias(null);
             mConnectAfterPairing = false;  // cancel auto-connect
             setPhonebookPermissionChoice(ACCESS_UNKNOWN);
             setMessagePermissionChoice(ACCESS_UNKNOWN);
