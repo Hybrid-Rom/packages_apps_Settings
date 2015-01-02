@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.android.internal.util.slim.DeviceUtils;
+import com.android.settings.cyanogenmod.qs.QSTiles;
 
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.R;
@@ -42,9 +43,13 @@ public class QsSettings extends SettingsPreferenceFragment
 
     public static final String TAG = "QsSettings";
 
-    private static final String PRE_QUICK_PULLDOWN = "quick_pulldown";
+    private static final String PREF_QUICK_PULLDOWN = "quick_pulldown";
+    private static final String PREF_SMART_PULLDOWN = "smart_pulldown";
 
     ListPreference mQuickPulldown;
+    ListPreference mSmartPulldown;
+
+    private Preference mQSTiles;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,9 +59,11 @@ public class QsSettings extends SettingsPreferenceFragment
 
         PreferenceScreen prefs = getPreferenceScreen();
 
-        mQuickPulldown = (ListPreference) findPreference(PRE_QUICK_PULLDOWN);
+        mQuickPulldown = (ListPreference) findPreference(PREF_QUICK_PULLDOWN);
+        mSmartPulldown = (ListPreference) findPreference(PREF_SMART_PULLDOWN);
         if (!DeviceUtils.isPhone(getActivity())) {
             prefs.removePreference(mQuickPulldown);
+            prefs.removePreference(mSmartPulldown);
         } else {
             // Quick Pulldown
             mQuickPulldown.setOnPreferenceChangeListener(this);
@@ -64,12 +71,24 @@ public class QsSettings extends SettingsPreferenceFragment
                     Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1);
             mQuickPulldown.setValue(String.valueOf(statusQuickPulldown));
             updateQuickPulldownSummary(statusQuickPulldown);
+
+            // Smart Pulldown
+            mSmartPulldown.setOnPreferenceChangeListener(this);
+            int smartPulldown = Settings.System.getInt(getContentResolver(),
+                    Settings.System.QS_SMART_PULLDOWN, 0);
+            mSmartPulldown.setValue(String.valueOf(smartPulldown));
+            updateSmartPulldownSummary(smartPulldown);
         }
+		mQSTiles = findPreference("qs_order");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        int qsTileCount = QSTiles.determineTileCount(getActivity());
+        mQSTiles.setSummary(getResources().getQuantityString(R.plurals.qs_tiles_summary,
+                    qsTileCount, qsTileCount));
     }
 
     @Override
@@ -81,8 +100,39 @@ public class QsSettings extends SettingsPreferenceFragment
                     statusQuickPulldown);
             updateQuickPulldownSummary(statusQuickPulldown);
             return true;
+        } else if (preference == mSmartPulldown) {
+            int smartPulldown = Integer.valueOf((String) newValue);
+            Settings.System.putInt(getContentResolver(), Settings.System.QS_SMART_PULLDOWN,
+                    smartPulldown);
+            updateSmartPulldownSummary(smartPulldown);
+            return true;
         }
         return false;
+    }
+
+    private void updateSmartPulldownSummary(int value) {
+        Resources res = getResources();
+
+        if (value == 0) {
+            // Smart pulldown deactivated
+            mSmartPulldown.setSummary(res.getString(R.string.smart_pulldown_off));
+        } else {
+            String type = null;
+            switch (value) {
+                case 1:
+                    type = res.getString(R.string.smart_pulldown_dismissable);
+                    break;
+                case 2:
+                    type = res.getString(R.string.smart_pulldown_persistent);
+                    break;
+                default:
+                    type = res.getString(R.string.smart_pulldown_all);
+                    break;
+            }
+            // Remove title capitalized formatting
+            type = type.toLowerCase();
+            mSmartPulldown.setSummary(res.getString(R.string.smart_pulldown_summary, type));
+        }
     }
 
     private void updateQuickPulldownSummary(int value) {
@@ -102,4 +152,3 @@ public class QsSettings extends SettingsPreferenceFragment
     }
 
 }
-
