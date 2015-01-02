@@ -17,6 +17,7 @@
 -keep class com.android.settings.slim.**
 -keep class com.koushikdutta.**
 -keep class com.android.settings.preference.*
+-keep class com.android.settings.cyanogenmod.**
 
 # Keep click responders
 -keepclassmembers class com.android.settings.inputmethod.UserDictionaryAddWordActivity {
