@@ -23,4 +23,7 @@
     <string name="unlock_quick_unlock_control_title">Quick unlock</string>
     <string name="unlock_quick_unlock_control_summary">Unlock automatically when the correct PIN/password is entered</string>
 
+    <!-- Default Alarm tone -->
+    <string name="alarm_ringtone_title">Default alarm ringtone</string>
+
 </resources>
