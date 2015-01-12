@@ -30,4 +30,8 @@
     <!-- Themes Settings -->
     <!-- Settings main menu entry -->
     <string name="themes_settings_title">Themes</string>
+
+    <!-- Default Alarm tone -->
+    <string name="alarm_ringtone_title">Default alarm ringtone</string>
+
 </resources>
