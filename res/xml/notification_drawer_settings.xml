@@ -38,6 +38,11 @@
             android:title="@string/qs_order_title"
             android:fragment="com.android.settings.cyanogenmod.qs.QSTiles" />
 
+        <PreferenceScreen
+            android:key="qs_colors"
+            android:title="@string/qs_colors_title"
+            android:fragment="com.android.settings.aicp.QSColors" />
+
         <com.android.settings.cyanogenmod.SecureSettingSwitchPreference
             android:key="sysui_qs_main_tiles"
             android:title="@string/qs_main_tiles_title"
