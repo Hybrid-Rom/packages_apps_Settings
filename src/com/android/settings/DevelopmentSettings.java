@@ -162,8 +162,6 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
 
     private static final String TERMINAL_APP_PACKAGE = "com.android.terminal";
 
-    private static final String ADVANCED_REBOOT_KEY = "advanced_reboot";
-
     private static final String DEVELOPMENT_SHORTCUT_KEY = "development_shortcut";
 
     private static final int RESULT_DEBUG_APP = 1000;
@@ -199,7 +197,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private PreferenceScreen mPassword;
     private String mDebugApp;
     private Preference mDebugAppPref;
-    
+
     private CheckBoxPreference mWaitForDebugger;
     private CheckBoxPreference mVerifyAppsOverUsb;
     private CheckBoxPreference mWifiDisplayCertification;
@@ -219,7 +217,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private CheckBoxPreference mShowHwLayersUpdates;
     private CheckBoxPreference mDebugLayout;
     private CheckBoxPreference mForceRtlLayout;
-    
+
     private ListPreference mDebugHwOverdraw;
     private ListPreference mLogdSize;
     private ListPreference mTrackFrameTime;
@@ -240,8 +238,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
     private CheckBoxPreference mShowAllANRs;
 
     private PreferenceScreen mProcessStats;
-    
-    private CheckBoxPreference mAdvancedReboot;
+
     private CheckBoxPreference mDevelopmentShortcut;
 
     private final ArrayList<Preference> mAllPrefs = new ArrayList<Preference>();
@@ -312,16 +309,13 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         mDebugViewAttributes = findAndInitCheckboxPref(DEBUG_VIEW_ATTRIBUTES);
         mPassword = (PreferenceScreen) findPreference(LOCAL_BACKUP_PASSWORD);
         mAllPrefs.add(mPassword);
-        mAdvancedReboot = findAndInitCheckboxPref(ADVANCED_REBOOT_KEY);
         mDevelopmentShortcut = findAndInitCheckboxPref(DEVELOPMENT_SHORTCUT_KEY);
-
 
         if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
             disableForUser(mEnableAdb);
             disableForUser(mClearAdbKeys);
             disableForUser(mEnableTerminal);
             disableForUser(mPassword);
-            disableForUser(mAdvancedReboot);
             disableForUser(mDevelopmentShortcut);
             disableForUser(mQuickBoot);
         }
@@ -576,14 +570,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         updateSimulateColorSpace();
         updateUseNuplayerOptions();
         updateUSBAudioOptions();
-        updateAdvancedRebootOptions();
         updateDevelopmentShortcutOptions();
-    }
-
-    private void writeAdvancedRebootOptions() {
-        Settings.Secure.putInt(getActivity().getContentResolver(),
-                Settings.Secure.ADVANCED_REBOOT,
-                mAdvancedReboot.isChecked() ? 1 : 0);
     }
 
     private void updateAdvancedRebootOptions() {
@@ -606,7 +593,7 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
         mDevelopmentShortcut.setChecked(Settings.Secure.getInt(getActivity().getContentResolver(),
                 Settings.Secure.DEVELOPMENT_SHORTCUT, 0) != 0);
     }
-    
+
     private void resetDangerousOptions() {
         mDontPokeProperties = true;
         for (int i=0; i<mResetCbPrefs.size(); i++) {
@@ -1485,8 +1472,6 @@ public class DevelopmentSettings extends SettingsPreferenceFragment
             writeUseNuplayerOptions();
         } else if (preference == mUSBAudio) {
             writeUSBAudioOptions();
-        } else if (preference == mAdvancedReboot) {
-            writeAdvancedRebootOptions();
         } else if (preference == mDevelopmentShortcut) {
             writeDevelopmentShortcutOptions();
         } else {
