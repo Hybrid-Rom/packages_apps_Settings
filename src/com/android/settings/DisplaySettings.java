@@ -94,9 +94,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private SwitchPreference mWakeUpWhenPluggedOrUnplugged;
     private PreferenceCategory mWakeUpOptions;
 
-    private SwitchPreference mWakeUpWhenPluggedOrUnplugged;
-    private PreferenceCategory mWakeUpOptions;
-
     private final Configuration mCurConfig = new Configuration();
 
     private ListPreference mScreenTimeoutPreference;
