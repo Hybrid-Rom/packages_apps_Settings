@@ -33,6 +33,8 @@ import com.android.settings.SettingsPreferenceFragment;
 public class InterfaceSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
+        public InterfaceSettings(){}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
