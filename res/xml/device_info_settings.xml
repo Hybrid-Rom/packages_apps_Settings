@@ -88,17 +88,17 @@
                 android:title="@string/model_number"
                 android:summary="@string/device_info_default"/>
                 
-        <!-- Mod version -->
-        <Preference android:key="mod_version"
-                style="?android:preferenceInformationStyle"
-                android:title="@string/mod_version"
-                android:summary="@string/mod_version_default" />
-
         <!-- Device firmware version -->
         <Preference android:key="firmware_version" 
                 style="?android:preferenceInformationStyle"
                 android:title="@string/firmware_version"
                 android:summary="@string/device_info_default"/>
+
+        <!-- Hybrid firmware version -->
+        <Preference android:key="hybrid_version"
+                style="?android:preferenceInformationStyle"
+                android:title="@string/hybrid_version_title"
+                android:summary="@string/hybrid_version_default"/>
 
         <!-- Device FCC equipment id -->
         <Preference android:key="fcc_equipment_id"

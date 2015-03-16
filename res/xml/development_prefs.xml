@@ -16,10 +16,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/development_settings_title">
-    <!-- <com.android.settings.BugreportPreference
-            android:key="bugreport"
-            android:title="@*android:string/bugreport_title"
-            android:dialogTitle="@*android:string/bugreport_title" /> -->
 
     <PreferenceScreen
             android:key="local_backup_password"
@@ -65,6 +61,17 @@
         android:title="@string/enable_quickboot_title"
         android:summary="@string/enable_quickboot_summary" />
 
+    <com.android.settings.HostnamePreference
+        android:key="device_hostname"
+        android:title="@string/device_hostname"
+        android:dialogTitle="@string/device_hostname"
+        android:positiveButtonText="@string/wifi_save"
+        android:negativeButtonText="@string/wifi_cancel"
+        android:selectAllOnFocus="true"
+        android:imeOptions="actionDone"
+        android:inputType="textNoSuggestions"
+        android:persistent="false" />
+
     <PreferenceCategory android:key="debug_debugging_category"
             android:title="@string/debug_debugging_category">
 
@@ -73,6 +80,12 @@
             android:title="@string/enable_adb"
             android:summary="@string/enable_adb_summary"/>
 
+        <CheckBoxPreference
+            android:key="adb_notify"
+            android:title="@string/adb_notify"
+            android:summary="@string/adb_notify_summary"
+            android:dependency="enable_adb"/>
+
         <Preference android:key="clear_adb_keys"
                 android:title="@string/clear_adb_keys" />
 
@@ -80,11 +93,6 @@
             android:key="enable_terminal"
             android:title="@string/enable_terminal_title"
             android:summary="@string/enable_terminal_summary" />
-
-        <CheckBoxPreference
-            android:key="bugreport_in_power"
-            android:title="@string/bugreport_in_power"
-            android:summary="@string/bugreport_in_power_summary"/>
 
         <CheckBoxPreference
             android:key="allow_mock_location"
@@ -284,6 +292,11 @@
             android:key="show_cpu_usage"
             android:title="@string/show_cpu_usage"
             android:summary="@string/show_cpu_usage_summary"/>
+
+        <CheckBoxPreference
+            android:key="show_cpu_info"
+            android:title="@string/show_cpu_info"
+            android:summary="@string/show_cpu_info_summary"/>
 
         <ListPreference
             android:key="track_frame_time"
