@@ -49,6 +49,7 @@
 
     <string-array name="heads_up_time_out_entries">
         <item>@string/heads_up_time_out_never</item>
+        <item>@string/heads_up_time_out_2sec</item>
         <item>@string/heads_up_time_out_4sec</item>
         <item>@string/heads_up_time_out_6sec</item>
         <item>@string/heads_up_time_out_8sec</item>
