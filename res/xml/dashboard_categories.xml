@@ -175,8 +175,6 @@
             android:id="@+id/personal_section"
             android:title="@string/header_category_personal" >
 
-<<<<<<< Updated upstream
-=======
         <!-- Profiles -->
         <dashboard-tile
                 android:id="@+id/profile_settings"
@@ -185,7 +183,6 @@
                 android:icon="@drawable/ic_settings_profiles"
                 />
 
->>>>>>> Stashed changes
         <!-- Location -->
         <dashboard-tile
                 android:id="@+id/location_settings"
