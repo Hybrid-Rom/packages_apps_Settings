@@ -149,7 +149,7 @@
         <item name="android:colorBackground">@android:color/white</item>
 
         <!-- Used by the ActionBar -->
-        <item name="android:colorPrimary">@color/theme_primary</item>
+        <item name="android:colorPrimary">#000</item>
         <!-- Used by the StatusBar -->
         <item name="android:colorPrimaryDark">@color/theme_primary_dark</item>
         <!-- Used by controls, e.g. CheckBox, ProgressBar, etc. -->
@@ -186,7 +186,7 @@
         <item name="android:colorBackground">@android:color/white</item>
 
         <!-- Used by the ActionBar -->
-        <item name="android:colorPrimary">@color/theme_primary</item>
+        <item name="android:colorPrimary">#000</item>
         <!-- Used by the StatusBar -->
         <item name="android:colorPrimaryDark">@color/theme_primary_dark</item>
         <!-- Used by controls, e.g. CheckBox, ProgressBar, etc. -->
@@ -207,7 +207,7 @@
     <!-- Used to color the switch bar controls -->
     <style name="ThemeOverlay.SwitchBar" parent="@android:style/ThemeOverlay">
         <!-- Used by controls, e.g. CheckBox, ProgressBar, etc. -->
-        <item name="android:colorAccent">@color/switch_accent_color</item>
+        <item name="android:colorAccent">@color/theme_accent</item>
     </style>
 
 </resources>
