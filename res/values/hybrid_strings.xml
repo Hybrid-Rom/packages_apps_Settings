@@ -183,7 +183,7 @@
 
     <!-- About phone screen, Hybrid version -->
     <string name="hybrid_version_title">Hybrid version</string>
-    <string name="hybrid_version_default">1.0</string>
+    <string name="hybrid_version_default">Unknown</string>
 
     <!-- QuickSettings: Quick Pulldown -->
     <string name="qs_title">Quick settings</string>
