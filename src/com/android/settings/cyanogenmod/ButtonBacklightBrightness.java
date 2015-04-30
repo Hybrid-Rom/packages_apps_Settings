@@ -40,7 +40,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.settings.R;
-import com.android.settings.ButtonSettings;
+import com.android.settings.eos.ButtonSettings;
 
 public class ButtonBacklightBrightness extends DialogPreference implements
         SeekBar.OnSeekBarChangeListener {

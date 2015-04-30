@@ -82,6 +82,7 @@ import com.android.settings.UserSpinnerAdapter.UserDetails;
 import com.android.settings.bluetooth.BluetoothSettings;
 import com.android.settings.dashboard.DashboardTile;
 import com.android.settings.drawable.CircleFramedDrawable;
+import com.android.settings.eos.ButtonSettings;
 
 import java.io.BufferedReader;
 import java.io.File;

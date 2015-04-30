@@ -26,17 +26,17 @@ import android.widget.Switch;
 import com.android.settings.widget.SwitchBar;
 
 public class BaseSystemSettingSwitchBar implements SwitchBar.OnSwitchChangeListener  {
-    private Context mContext;
-    private SwitchBar mSwitchBar;
-    private SettingsObserver mSettingsObserver;
-    private boolean mListeningToOnSwitchChange = false;
+    protected Context mContext;
+    protected SwitchBar mSwitchBar;
+    protected SettingsObserver mSettingsObserver;
+    protected boolean mListeningToOnSwitchChange = false;
 
-    private boolean mStateMachineEvent;
+    protected boolean mStateMachineEvent;
 
-    private final String mSettingKey;
-    private final int mDefaultState;
+    protected final String mSettingKey;
+    protected final int mDefaultState;
 
-    private final SwitchBarChangeCallback mCallback;
+    protected final SwitchBarChangeCallback mCallback;
     public interface SwitchBarChangeCallback {
         public void onEnablerChanged(boolean isEnabled);
     }
@@ -88,7 +88,7 @@ public class BaseSystemSettingSwitchBar implements SwitchBar.OnSwitchChangeListe
         }
     }
 
-    private void setSwitchBarChecked(boolean checked) {
+    protected void setSwitchBarChecked(boolean checked) {
         mStateMachineEvent = true;
         mSwitchBar.setChecked(checked);
         mStateMachineEvent = false;
@@ -97,7 +97,7 @@ public class BaseSystemSettingSwitchBar implements SwitchBar.OnSwitchChangeListe
         }
     }
 
-    private void setSwitchState() {
+    protected void setSwitchState() {
         boolean enabled = Settings.System.getInt(mContext.getContentResolver(),
                 mSettingKey, mDefaultState) == 1;
         mStateMachineEvent = true;
@@ -121,19 +121,19 @@ public class BaseSystemSettingSwitchBar implements SwitchBar.OnSwitchChangeListe
         }
     }
 
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
+    protected class SettingsObserver extends ContentObserver {
+        protected SettingsObserver(Handler handler) {
             super(handler);
         }
 
-        void observe() {
+        protected void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     mSettingKey), false, this);
             update();
         }
 
-        void unobserve() {
+        protected void unobserve() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.unregisterContentObserver(this);
         }

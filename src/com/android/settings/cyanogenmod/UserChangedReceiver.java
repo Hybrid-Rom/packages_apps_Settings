@@ -20,7 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.android.settings.ButtonSettings;
+import com.android.settings.eos.ButtonSettings;
 
 public class UserChangedReceiver extends BroadcastReceiver {
 
