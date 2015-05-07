@@ -145,8 +145,8 @@ public class AppOpsSummary extends Fragment {
     private AppOpsState.OpsTemplate[] filterTemplates(AppOpsState.OpsTemplate[] templates) {
         List<AppOpsState.OpsTemplate> validTemplates = new ArrayList(templates.length);
         for (AppOpsState.OpsTemplate template : templates) {
-            if (template == AppOpsState.SU_TEMPLATE
-                    && !DevelopmentSettings.isRootForAppsEnabled()) {
+            // SuperSU handles su AppOps internally, so su template is no-op
+            if (template == AppOpsState.SU_TEMPLATE) {
                 continue;
             }
             validTemplates.add(template);

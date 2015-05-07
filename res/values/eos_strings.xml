@@ -161,9 +161,12 @@
     <string name="system_update_menu">org.teameos.updater.UpdatesSettings</string>
     <string name="system_update">org.teameos.updater</string>
 
+    <!-- SuperSU header name - the app hides itself from launcher based on this resource name being present in com.android.settings -->
+    <string name="supersu_title">SuperSU</string>
+
     <!-- TEMP: follow up later -->
     <string name="auto_brightness_reset_button">Reset</string>
-    <string name="mod_version">Eos</string>
+    <string name="mod_version">The TeamEos Project</string>
     <string name="system_update_settings_list_item_title">Eos updates</string>
 
     <!-- Navbar height -->
